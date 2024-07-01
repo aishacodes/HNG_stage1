@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   res
     .status(404)
     .send(
-      "<h1>Welcome to my server (HNG stage1)</h1> <p>Follow this format: <a href='https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat'>https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat</a> </p>"
+      "<h1>Welcome to my server (HNG stage1)</h1> <h2>404!</h2> <h3>Incorrect route</h3> <p>Follow this format: <a href='https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat'>https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat</a> </p>"
     );
 });
 

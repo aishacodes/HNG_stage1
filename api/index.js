@@ -4,11 +4,13 @@ const axios = require("axios");
 const app = express();
 
 app.get("/", (request, response) => {
-  response.send("<h1>Welcome to my server (HNG stage1)</h1>");
+  response.send(
+    "<h1>Welcome to my server (HNG stage1)</h1> <p>Follow this format: <a href='https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat'>https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat</a> </p>"
+  );
 });
 
 app.get("/api/hello", async (req, res) => {
-  const visitorName = req.query.visitor_name || "Guest";
+  const visitorName = req.query.visitor_name || "Visitor";
   const ipAddress = req.ip;
 
   let clientIp =
@@ -41,6 +43,14 @@ app.get("/api/hello", async (req, res) => {
     console.error(error);
     res.status(500).send("An error occurred");
   }
+});
+
+app.use((req, res, next) => {
+  res
+    .status(404)
+    .send(
+      "<h1>Welcome to my server (HNG stage1)</h1> <p>Follow this format: <a href='https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat'>https://hng-stage1-ox5d.vercel.app/api/hello?visitor_name=Aishat</a> </p>"
+    );
 });
 
 const PORT = 3001;

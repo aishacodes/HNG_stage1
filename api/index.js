@@ -21,10 +21,8 @@ app.get("/api/hello", async (req, res) => {
     const ipInfoResponse = await axios.get(
       `https://ipinfo.io/${clientIp}?token=52c9f45f031858`
     );
-    console.log(ipInfoResponse.city, "here");
+
     const city = ipInfoResponse.data.city || "New York";
-    const region = ipInfoResponse.data.region || "";
-    const country = ipInfoResponse.data.country || "";
 
     const weatherApiKey =
       process.env.OPENWEATHERMAP_API_KEY || "22099c06bc58a459767695dcfa973e1f";
@@ -36,7 +34,7 @@ app.get("/api/hello", async (req, res) => {
 
     res.json({
       client_ip: clientIp,
-      location: `${city}, ${region && region} ${country && country}`,
+      location: city,
       greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celsius in ${city}`,
     });
   } catch (error) {

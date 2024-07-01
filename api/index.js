@@ -10,7 +10,6 @@ app.get("/", (request, response) => {
 app.get("/api/hello", async (req, res) => {
   const visitorName = req.query.visitor_name || "Guest";
   const ipAddress = req.ip;
-  console.log(ipAddress, "hyyy");
 
   let clientIp =
     req.headers["cf-connecting-ip"] ||
@@ -23,20 +22,22 @@ app.get("/api/hello", async (req, res) => {
       `https://ipinfo.io/${clientIp}?token=52c9f45f031858`
     );
     console.log(ipInfoResponse.city, "here");
-    const location = ipInfoResponse.data.city || "New York";
+    const city = ipInfoResponse.data.city || "New York";
+    const region = ipInfoResponse.data.region || "";
+    const country = ipInfoResponse.data.country || "";
 
     const weatherApiKey =
       process.env.OPENWEATHERMAP_API_KEY || "22099c06bc58a459767695dcfa973e1f";
 
     const weatherResponse = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${weatherApiKey}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=metric`
     );
     const temperature = weatherResponse.data.main.temp;
 
     res.json({
       client_ip: clientIp,
-      location: location,
-      greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celsius in ${location}`,
+      location: `${city}, ${region && region} ${country && country}`,
+      greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celsius in ${city}`,
     });
   } catch (error) {
     console.error(error);
